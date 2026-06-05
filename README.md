@@ -88,8 +88,12 @@ satellite-formation-marl/
 │   ├── multiagente/            # Training & evaluation scripts (1–4 agents)
 │   └── lite6/                  # Lite6 training & evaluation scripts
 │
+├── assets/
+│   ├── robot_cube.xml          # MuJoCo model — 4-satellite formation
+│   └── lite6_airbearings.xml   # MuJoCo model — Ufactory Lite6 on air bearings
+|
 ├── models/
-│   └── [phase]/                # Trained SB3 models (.zip) per phase
+│   ├── README.md
 │
 ├── lite6_validation/
 │   ├── frame_calibration.py       # Sim-to-Real frame transformation
@@ -98,7 +102,9 @@ satellite-formation-marl/
 │   ├── base_drift_analysis.py     # Base drift and orientation analysis
 │   └── env_diagnostic.py          # Environment sanity checks and MuJoCo viewer test
 │
-├── logs/                       # TensorBoard training logs
+├── logs/
+│   ├── README.md
+
 └── README.md
 ```
 
