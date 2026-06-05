@@ -92,11 +92,8 @@ satellite-formation-marl/
 │   ├── robot_cube.xml          # MuJoCo model — 4-satellite formation
 │   └── lite6_airbearings.xml   # MuJoCo model — Ufactory Lite6 on air bearings
 │
-
-Note: lite6_airbearings.xml requires Ufactory Lite6 mesh files (.stl) not included here. Download them from the MuJoCo Menagerie repository and place them in assets/visual/ and assets/collision/.
-
 ├── models/
-│   ├── README.md
+│   └── README.md               # Models not included — see README for details
 │
 ├── lite6_validation/
 │   ├── frame_calibration.py       # Sim-to-Real frame transformation
@@ -106,10 +103,12 @@ Note: lite6_airbearings.xml requires Ufactory Lite6 mesh files (.stl) not includ
 │   └── env_diagnostic.py          # Environment sanity checks and MuJoCo viewer test
 │
 ├── logs/
-│   ├── README.md
-|
+│   └── README.md               # Logs not included — regenerated on training
+│
 └── README.md
 ```
+
+> **Note:** `lite6_airbearings.xml` requires Ufactory Lite6 mesh files (`.stl`) not included here. Download them from the [MuJoCo Menagerie repository](https://github.com/google-deepmind/mujoco_menagerie/tree/main/ufactory_lite6) and place them in `assets/visual/` and `assets/collision/`.
 
 ---
 
