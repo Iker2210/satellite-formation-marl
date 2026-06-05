@@ -173,3 +173,5 @@ Full development playlist (phases 1–7 + Sim-to-Real):
 This project is part of **IA Robots** — a personal research platform documenting original work in autonomous and space robotics.  
 🌐 [iarobots.tech](https://iarobots.tech)  
 🔗 [LinkedIn](https://linkedin.com/in/iker-alaminos-hernandez-iarobots)
+
+> The original development repository, including the full commit history across all training phases, is available at [TFG-Reinforcement-Learning](https://github.com/Iker2210/TFG-Reinforcement-Learning).
