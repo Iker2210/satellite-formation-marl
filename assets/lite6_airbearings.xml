@@ -1,0 +1,184 @@
+<mujoco model="ufactory_lite6_airbearings">
+  <compiler angle="radian" autolimits="true"/>
+  <option integrator="implicitfast" timestep="0.002" gravity="0 0 -9.81"/>
+
+  <default>
+    <default class="lite6">
+      <geom type="mesh"/>
+      <joint axis="0 0 1" damping="20.0" armature="0.8"/>
+      <position kp="200" kv="10"/>
+      <default class="size1">
+        <position forcerange="-50 50"/>
+      </default>
+      <default class="size2">
+        <position forcerange="-32 32"/>
+      </default>
+      <default class="size3">
+        <position forcerange="-20 20"/>
+      </default>
+      <default class="visual">
+        <geom contype="0" conaffinity="0" group="2" material="white"/>
+      </default>
+      <default class="collision">
+        <geom group="3" mass="0" density="0" contype="1" conaffinity="1"/>
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
+    </default>
+
+    <default class="bearing_visual">
+      <geom type="cylinder" contype="0" conaffinity="0" group="2" material="silver"/>
+    </default>
+
+    <default class="bearing_contact">
+      <geom type="cylinder" group="3" friction="0.003 0.0001 0.0001" solref="0.02 1.5" solimp="0.9 0.95 0.001"/>
+    </default>
+
+    <default class="support_visual">
+      <geom contype="0" conaffinity="0" group="2" material="silver"/>
+    </default>
+  </default>
+
+  <asset>
+    <material name="white" rgba="1 1 1 1"/>
+    <material name="silver" rgba=".753 .753 .753 1"/>
+    <material name="mesa_mat" rgba="0.8 0.8 0.8 1"/>
+    <material name="support_mat" rgba="0.6 0.6 0.6 1"/>
+
+    <mesh file="assets/visual/link_base.stl"/>
+    <mesh file="assets/visual/link1.stl"/>
+    <mesh file="assets/visual/link2.stl"/>
+    <mesh file="assets/visual/link3.stl"/>
+    <mesh file="assets/visual/link4.stl"/>
+    <mesh file="assets/visual/link5.stl"/>
+    <mesh file="assets/visual/link6.stl"/>
+
+    <mesh name="link_base_c" file="assets/collision/link_base.stl"/>
+    <mesh name="link1_c" file="assets/collision/link1.stl"/>
+    <mesh name="link2_c" file="assets/collision/link2.stl"/>
+    <mesh name="link3_c" file="assets/collision/link3.stl"/>
+    <mesh name="link4_c" file="assets/collision/link4.stl"/>
+    <mesh name="link5_c" file="assets/collision/link5.stl"/>
+    <mesh name="link6_c" file="assets/collision/link6.stl"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 3" dir="0 0 -1"/>
+
+    <geom name="floor" type="plane" pos="0 0 0" size="3 3 0.1" contype="1" conaffinity="1" friction="0.002 0.001 0.001" solref="0.01 0.8" solimp="0.95 0.99 0.001"/>
+
+    <geom name="wall1" type="box" size="3 0.05 0.2" pos="0 3 0.1" rgba="1 0 0 0.2"/>
+    <geom name="wall2" type="box" size="3 0.05 0.2" pos="0 -3 0.1" rgba="1 0 0 0.2"/>
+    <geom name="wall3" type="box" size="0.05 3 0.2" pos="3 0 0.1" rgba="1 0 0 0.2"/>
+    <geom name="wall4" type="box" size="0.05 3 0.2" pos="-3 0 0.1" rgba="1 0 0 0.2"/>
+
+    <body name="base_root" pos="0 0 0.22" quat="0.7071068 -0.7071068 0 0">
+      <freejoint name="root_free"/>
+      <body name="support_frame" pos="0 0 -0.21">
+        <inertial pos="0 0 0" mass="0.001" diaginertia="0.00001 0.00001 0.00001"/>
+
+        <!-- APOYO IZQUIERDO: Longitud total 14 cm (REFERENCIA) -->
+        <!-- APOYO IZQUIERDO: Longitud total 14 cm (REFERENCIA) -->
+        <body name="support_left" pos="-0.04 0.06 0.19" quat="0.5 0.5 0.5 -0.5">
+          <inertial pos="0 0 -0.07" mass="0.1" diaginertia="0.001 0.001 0.001"/>
+          <geom name="sup_left_plate1" type="box" pos="0.0 0 -0.0065" size="0.05 0.028 0.004" material="support_mat" group="2"/>
+          <!-- Varillas de 12 cm (de z=-0.01 a z=-0.13) -->
+          <geom name="sup_left_rod1" type="capsule" fromto="-0.04 0 -0.01 -0.04 0 -0.13" size="0.0035" material="support_mat" group="2"/>
+          <geom name="sup_left_rod2" type="capsule" fromto="0.04 0 -0.01 0.04 0 -0.13" size="0.0035" material="support_mat" group="2"/>
+          <geom name="sup_left_plate2" type="box" pos="0.0 0 -0.13" size="0.05 0.028 0.004" material="support_mat" group="2"/>
+          <geom name="bearing_left_vis" type="cylinder" pos="0.0 0 -0.135" size="0.024 0.005" material="silver" group="2"/>
+          <geom name="bearing_left_contact" type="cylinder" pos="0.0 0 -0.135" size="0.024 0.005" zaxis="0 1 0" friction="0.01 0.005 0.0001" solref="0.01 0.8" solimp="0.95 0.99 0.001" condim="6" group="3"/>
+        </body>
+      </body>
+
+      <body name="link_base" childclass="lite6" pos="0 0 0" quat="0.7071068 0 -0.7071068 0">
+        <inertial pos="-0.00829545 3.26357e-05 0.0631195" mass="1.65394" diaginertia="0.01 0.01 0.01"/>
+        <geom class="visual" mesh="link_base"/>
+        <geom name="link_base_c" class="collision" mesh="link_base_c"/>
+ 
+        <body name="link1" pos="0 0 0.2435">
+          <inertial pos="-0.00036 0.04195 -0.0025" quat="0.608059 0.792349 -0.0438707 0.0228718" mass="1.411" diaginertia="0.00145276 0.00135275 0.000853355"/>
+          <joint name="joint1" range="-6.28319 6.28319"/>
+          <geom class="visual" mesh="link1"/>
+          <geom name="link1_c" class="collision" mesh="link1_c"/>
+
+          <body name="link2" quat="-1 1 1 1">
+            <inertial pos="0.179 0 0.0584" quat="0.417561 0.571619 0.569585 0.417693" mass="1.34" diaginertia="0.00560971 0.0052152 0.00122018"/>
+            <joint name="joint2" range="-2.61799 2.61799"/>
+            <geom class="visual" mesh="link2"/>
+            <geom name="link2_c" class="collision" mesh="link2_c"/>
+
+            <!-- APOYO CENTRAL: Longitud total 6.55 cm (0.5mm extra para garantizar contacto) -->
+            <body name="support_center" pos="0.1065 0 0.135" quat="0 0.70710678 0.70710678 0">
+              <inertial pos="0 0 -0.03" mass="0.1" diaginertia="0.001 0.001 0.001"/>
+              <geom name="sup_cent_plate1" type="box" pos="0 0 -0.0065" size="0.05 0.028 0.004" material="support_mat" group="2"/>
+              <!-- Varillas de 4.55 cm (de z=-0.01 a z=-0.0555) -->
+              <geom name="sup_cent_rod1" type="capsule" fromto="-0.04 0 -0.01 -0.04 0 -0.0555" size="0.0035" material="support_mat" group="2"/>
+              <geom name="sup_cent_rod2" type="capsule" fromto="0.04 0 -0.01 0.04 0 -0.0555" size="0.0035" material="support_mat" group="2"/>
+              <geom name="sup_cent_plate2" type="box" pos="0 0 -0.0555" size="0.05 0.028 0.004" material="support_mat" group="2"/>
+              <geom name="bearing_cent_vis" type="cylinder" pos="0 0 -0.0605" size="0.024 0.005" material="silver" group="2"/>
+              <geom name="bearing_center_contact" type="cylinder" pos="0 0 -0.0605" size="0.024 0.005" zaxis="0 1 0" friction="0.01 0.005 0.0001" solref="0.01 0.8" solimp="0.95 0.99 0.001" condim="6" group="3"/>
+            </body>
+
+
+            <body name="link3" pos="0.2002 0 0" quat="-2.59734e-06 -0.707105 -0.707108 -2.59735e-06">
+              <inertial pos="0.072 -0.0357 -0.001" quat="0.128259 0.662963 -0.167256 0.71837" mass="0.953" diaginertia="0.0018521 0.00175546 0.000703807"/>
+              <joint name="joint3" range="-3.5 3.5"/>
+              <geom class="visual" mesh="link3"/>
+              <geom name="link3_c" class="collision" mesh="link3_c"/>
+
+              <body name="link4" pos="0.087 -0.22761 0" quat="0.707105 0.707108 0 0">
+                <inertial pos="-0.002 -0.0285 -0.0813" quat="0.975248 0.22109 0.00203498 -0.00262178" mass="1.284" diaginertia="0.00370503 0.00349091 0.00109586"/>
+                <joint name="joint4" range="-6.28319 6.28319"/>
+                <geom class="visual" mesh="link4"/>
+                <geom name="link4_c" class="collision" mesh="link4_c"/>
+
+                <!-- APOYO DERECHO: Longitud total 11 cm -->
+                <body name="support_right" pos="-0.002 -0.09 -0.021" quat="0 0 0.70711 0.70710">
+                  <inertial pos="0 0 -0.05" mass="0.1" diaginertia="0.001 0.001 0.001"/>
+                  <geom name="sup_right_plate1" type="box" pos="0 0 -0.0065" size="0.05 0.028 0.004" material="support_mat" group="2"/>
+                  <!-- Varillas de 9 cm (de z=-0.01 a z=-0.10) -->
+                  <geom name="sup_right_rod1" type="capsule" fromto="-0.04 0 -0.01 -0.04 0 -0.10" size="0.0035" material="support_mat" group="2"/>
+                  <geom name="sup_right_rod2" type="capsule" fromto="0.04 0 -0.01 0.04 0 -0.10" size="0.0035" material="support_mat" group="2"/>
+                  <geom name="sup_right_plate2" type="box" pos="0 0 -0.10" size="0.05 0.028 0.004" material="support_mat" group="2"/>
+                  <geom name="bearing_right_vis" type="cylinder" pos="0 0 -0.105" size="0.024 0.005" material="silver" group="2"/>
+                  <geom name="bearing_right_contact" type="cylinder" pos="0 0 -0.105" size="0.024 0.005" zaxis="0 1 0" friction="0.01 0.005 0.0001" solref="0.01 0.8" solimp="0.95 0.99 0.001" condim="6" group="3"/>
+                </body>
+
+                <body name="link5" quat="1 1 0 0">
+                  <inertial pos="0 0.01 0.0019" quat="0.71423 0.696388 -0.0531933 0.0456997" mass="0.804" diaginertia="0.000567553 0.000529266 0.000507681"/>
+                  <joint name="joint5" range="-2.1642 2.1642"/>
+                  <geom class="visual" mesh="link5"/>
+                  <geom name="link5_c" class="collision" mesh="link5_c"/>
+
+                  <body name="link6" pos="0 0.0625 0" quat="1 -1 0 0">
+                    <inertial pos="0 -0.00194 -0.0102" quat="-0.0376023 0.704057 0.0446838 0.707738" mass="0.13" diaginertia="0.000148148 8.57757e-05 7.71412e-05"/>
+                    <joint name="joint6" range="-6.28319 6.28319"/>
+                    <geom class="visual" mesh="link6" material="silver"/>
+                    <geom name="link6_c" class="collision" mesh="link6_c"/>
+                    <site name="attachment_site"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <position name="act_joint1" joint="joint1" class="size1" ctrlrange="-6.28319 6.28319"/>
+    <position name="act_joint2" joint="joint2" class="size1" ctrlrange="-2.61799 2.61799"/>
+    <position name="act_joint3" joint="joint3" class="size2" ctrlrange="-0.061087 5.23599"/>
+    <position name="act_joint4" joint="joint4" class="size2" ctrlrange="-6.28319 6.28319"/>
+    <position name="act_joint5" joint="joint5" class="size2" ctrlrange="-2.1642 2.1642"/>
+    <position name="act_joint6" joint="joint6" class="size3" ctrlrange="-6.28319 6.28319"/>
+  </actuator>
+
+  <keyframe>
+    <key name="home" qpos="0 0 0.22 0.7071068 -0.7071068 0 0 0 0 3.1415 0 0 0" ctrl="0 0 3.1415 0 0 0"/>
+  </keyframe>
+  <visual>
+    <global offwidth="1920" offheight="1080"/>
+  </visual>
+</mujoco>
