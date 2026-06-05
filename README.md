@@ -92,9 +92,11 @@ satellite-formation-marl/
 │   └── [phase]/                # Trained SB3 models (.zip) per phase
 │
 ├── lite6_validation/
-│   ├── frame_transform.py      # Reference frame transformation
-│   ├── ik_constrained.py       # Constrained inverse kinematics
-│   └── inference_loop.py       # Real-time inference at 100 Hz
+│   ├── frame_calibration.py       # Sim-to-Real frame transformation
+│   ├── sim_to_real_horizontal.py  # Real hardware inference — horizontal config (air bearings)
+│   ├── sim_to_real_vertical.py    # Real hardware inference — vertical config
+│   ├── base_drift_analysis.py     # Base drift and orientation analysis
+│   └── env_diagnostic.py          # Environment sanity checks and MuJoCo viewer test
 │
 ├── logs/                       # TensorBoard training logs
 └── README.md
